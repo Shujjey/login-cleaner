@@ -1,18 +1,26 @@
-function checkLogin(provider) {
-  const resultDiv = document.getElementById('result');
-  const isLinked = Math.random() > 0.5;
-  if (isLinked) {
-    resultDiv.innerHTML = `
-      <p><strong>${provider}</strong> is <span style="color: green;">linked</span> to your account.</p>
-      <button onclick="removeLogin('${provider}')">Remove ${provider} Login</button>
-    `;
-  } else {
-    resultDiv.innerHTML = `<p><strong>${provider}</strong> is <span style="color: red;">not linked</span> to your account.</p>`;
-  }
-}
+function checkLogins() {
+  const loginList = document.getElementById("loginList");
 
-function removeLogin(provider) {
-  document.getElementById('result').innerHTML = `
-    <p><strong>${provider}</strong> login has been <span style="color: red;">removed</span>.</p>
-  `;
-}
+  // Simulate a loading delay
+  loginList.innerHTML = "<li>🔄 Checking logins...</li>";
+
+  setTimeout(() => {
+    // Fake data – this will be replaced with real checks later
+    const linkedAccounts = [
+      { provider: "Google", status: "Connected ✅" },
+      { provider: "Facebook", status: "Not Connected ❌" },
+      { provider: "Twitter", status: "Connected ✅" },
+      { provider: "TikTok Passkey", status: "Not Linked ❌" }
+    ];
+
+    // Clear the list
+    loginList.innerHTML = "";
+
+    // Show each login status
+    linkedAccounts.forEach(account => {
+      const li = document.createElement("li");
+      li.textContent = `${account.provider}: ${account.status}`;
+      loginList.appendChild(li);
+    });
+  }, 1000); // 1 second delay
+        }
