@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
   <title>Login Cleaner</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>🧹 Login Cleaner</h1>
-    <p>Check and manage your connected login accounts.</p>
-
-    <div class="login-status">
-      <h2>Linked Accounts:</h2>
-      <ul id="loginList">
-        <li>🔄 Loading...</li>
-      </ul>
-    </div>
-
+    <h1>🔐 Login Cleaner</h1>
+    <p>Check which third-party accounts and passkeys are linked to your TikTok account.</p>
+    
     <button onclick="checkLogins()">🔍 Check My Logins</button>
+    
+    <h2>🔗 Linked Accounts</h2>
+    <ul id="loginList"></ul>
+    
+    <h2>🔑 Linked Passkeys</h2>
+    <ul id="passkeyList"></ul>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
