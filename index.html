@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
   <title>Login Cleaner</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Login Cleaner</h1>
-    <p>Click below to check or remove third-party logins:</p>
+    <h1>🧹 Login Cleaner</h1>
+    <p>Check and manage your connected login accounts.</p>
 
-    <button onclick="checkLogin('Google')">Check Google</button>
-    <button onclick="checkLogin('Facebook')">Check Facebook</button>
-    <button
+    <div class="login-status">
+      <h2>Linked Accounts:</h2>
+      <ul id="loginList">
+        <li>🔄 Loading...</li>
+      </ul>
+    </div>
+
+    <button onclick="checkLogins()">🔍 Check My Logins</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
