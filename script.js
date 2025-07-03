@@ -1,40 +1,57 @@
-function checkLogins() {
-  const loginList = document.getElementById("loginList");
-  const passkeyList = document.getElementById("passkeyList");
+const dummyAccounts = [
+  { id: 1, platform: 'Google', email: 'user1@gmail.com' },
+  { id: 2, platform: 'Facebook', email: 'user2@facebook.com' },
+  { id: 3, platform: 'Twitter', email: 'user3@twitter.com' }
+];
 
-  // Show loading
-  loginList.innerHTML = "<li>🔄 Checking logins...</li>";
-  passkeyList.innerHTML = "<li>🔄 Checking passkeys...</li>";
+const LOCAL_KEY = 'savedAccounts';
+const accountList = document.getElementById('account-list');
+const restoreBtn = document.getElementById('restore-btn');
 
-  setTimeout(() => {
-    // Fake linked accounts
-    const linkedAccounts = [
-      { provider: "Google", status: "Connected ✅" },
-      { provider: "Facebook", status: "Not Connected ❌" },
-      { provider: "Twitter", status: "Connected ✅" }
-    ];
-
-    // Fake passkeys
-    const passkeys = [
-      { device: "iPhone 13 Pro", added: "May 5, 2024" },
-      { device: "MacBook Air", added: "Jan 20, 2024" }
-    ];
-
-    // Show linked accounts
-    loginList.innerHTML = "";
-    linkedAccounts.forEach(account => {
-      const li = document.createElement("li");
-      li.textContent = `${account.provider}: ${account.status}`;
-      loginList.appendChild(li);
-    });
-
-    // Show passkeys
-    passkeyList.innerHTML = "";
-    passkeys.forEach(key => {
-      const li = document.createElement("li");
-      li.textContent = `${key.device} (Added: ${key.added})`;
-      passkeyList.appendChild(li);
-    });
-
-  }, 1000); // simulate loading
+function loadAccounts() {
+  const saved = localStorage.getItem(LOCAL_KEY);
+  return saved ? JSON.parse(saved) : dummyAccounts;
 }
+
+function saveAccounts(accounts) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(accounts));
+}
+
+function renderAccounts(accounts) {
+  accountList.innerHTML = '';
+
+  if (accounts.length === 0) {
+    accountList.innerHTML = '<p>🎉 No linked logins!</p>';
+    return;
+  }
+
+  accounts.forEach(acc => {
+    const div = document.createElement('div');
+    div.className = 'account';
+    div.innerHTML = `
+      <div>
+        <strong>${acc.platform}</strong><br />
+        <small>${acc.email}</small>
+      </div>
+      <button onclick="deleteAccount(${acc.id})">🗑️</button>
+    `;
+    accountList.appendChild(div);
+  });
+}
+
+function deleteAccount(id) {
+  const accounts = loadAccounts().filter(acc => acc.id !== id);
+  saveAccounts(accounts);
+  renderAccounts(accounts);
+}
+
+function restoreAll() {
+  saveAccounts(dummyAccounts);
+  renderAccounts(dummyAccounts);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderAccounts(loadAccounts());
+});
+
+restoreBtn.addEventListener('click', restoreAll);
